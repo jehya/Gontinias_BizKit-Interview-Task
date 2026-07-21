@@ -69,7 +69,9 @@ def rental_days(from_date, to_date):
 
     TODO (Task 1): implement.
     """
-    raise NotImplementedError
+    
+    num_days = to_date - from_date
+    return num_days.days + 1
 
 
 def dates_overlap(start_a, end_a, start_b, end_b):
@@ -78,7 +80,10 @@ def dates_overlap(start_a, end_a, start_b, end_b):
 
     TODO (Task 1): implement.
     """
-    raise NotImplementedError
+    if end_a == start_b or end_b == start_a:
+        return False
+    
+    return start_a <= end_b and start_b <= end_a
 
 
 def find_conflicting_booking(equipment_id, from_date, to_date, bookings):
@@ -87,7 +92,20 @@ def find_conflicting_booking(equipment_id, from_date, to_date, bookings):
 
     TODO (Task 1): implement.
     """
-    raise NotImplementedError
+    for booking in bookings:
+        if booking["equipment_id"] != equipment_id:
+            continue
+
+        if booking.get("status") == "cancelled":
+            continue
+
+        booking_from = parse_date(booking["from_date"])
+        booking_to = parse_date(booking["to_date"])
+
+        if dates_overlap(from_date, to_date, booking_from, booking_to):
+            return booking
+        
+    return None
 
 
 def calculate_total(daily_rate, days):
@@ -96,7 +114,12 @@ def calculate_total(daily_rate, days):
 
     TODO (Task 2): implement.
     """
-    raise NotImplementedError
+    total = daily_rate * days
+
+    if days >= 7:
+        total *= 0.9
+    
+    return round(total, 1)
 
 
 # ---------------------------------------------------------------------------
@@ -172,4 +195,4 @@ def create_booking():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=8080)
