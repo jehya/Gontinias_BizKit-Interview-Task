@@ -69,7 +69,9 @@ def rental_days(from_date, to_date):
 
     TODO (Task 1): implement.
     """
-    raise NotImplementedError
+    
+    num_days = to_date - from_date
+    return num_days.days + 1
 
 
 def dates_overlap(start_a, end_a, start_b, end_b):
@@ -172,4 +174,4 @@ def create_booking():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=8080)
