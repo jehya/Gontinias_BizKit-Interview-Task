@@ -49,6 +49,10 @@
         const opt = document.createElement("option");
         opt.value = item.id;
         opt.textContent = `${item.name} (PHP ${item.daily_rate}/day)`;
+        if (item.status.toLowerCase() === "maintenance") {
+          opt.disabled = true;
+          opt.textContent += " - Under Maintenance";
+        }
         select.appendChild(opt);
       });
     }
